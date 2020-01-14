@@ -47,13 +47,25 @@ function after(r, cb){
   return run
 }
 
-function delay(cb, wait, ...args){
-  function run(...args){
-    setTimeout(function() {
-      cb(...args)
-    }, wait);
+function delay(cb, wait){
+  function delay(...a){
+    let caller = () => console.log(cb(...a));
+    setTimeout(caller, wait);
   }
-  return run
+  return delay
 }
 
-module.exports = outer, createFunction, createFunctionPrinter, addByX, once, after, delay
+function rollCall(names){
+  index = 0;
+  function callNames() {
+    if(index <= names.length -1){
+      console.log(names[index]);
+    } else if(index == names.length){
+      console.log("Everyone accounted for");
+    }
+    index ++;
+  }
+  return callNames
+}
+
+module.exports = outer, createFunction, createFunctionPrinter, addByX, once, after, delay, rollCall
