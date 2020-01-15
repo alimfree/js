@@ -1,71 +1,54 @@
 // closure homework from frontendmasters course
 // js the hard parts by Will Sentence
-
-function outer (){
+function closures() {
+  this.counter = () => {
     let counter = 0;
-    function incrementCounter (){
-        return counter ++;
+    return () => counter ++;
+  };
+
+  this.sayHello = () => {
+    return () => console.log('hello')
+  };
+
+  this.printer = (input) => {
+    return () => console.log(input)
+  };
+
+  this.addByX = (x) => {
+    return (i) => i+x;
+  };
+
+  this.once = (cb) => {
+    let counter = 0, output = 1;
+    return (x) => {
+      counter ++;
+      return counter == 1 ? output = cb(x) : output;
     }
-    return incrementCounter;
-}
+  };
 
-function createFunction(){
-  function sayHello(){
-    console.log('hello')
-  }
-  return sayHello;
-}
+  this.after = (r, cb) => {
+    counter = 1;
+    return () => (counter == r) ? cb() : counter++;
+  };
 
-function createFunctionPrinter(input){
-  function printer(){
-    console.log(input)
-  }
-  return printer
-}
-
-function addByX(x){
-  function add(i){
-    return i+x;
-  }
-  return add
-}
-
-function once(cb){
-  let counter = 0, output = 1;
-  function run(x){
-    counter ++;
-    return counter == 1 ? output = cb(x) : output;
-  }
-  return run
-}
-
-function after(r, cb){
-  counter = 1
-  function run(){
-    (counter == r) ? cb() : counter++;
-  }
-  return run
-}
-
-function delay(cb, wait){
-  function delay(...a){
-    let caller = () => console.log(cb(...a));
-    setTimeout(caller, wait);
-  }
-  return delay
-}
-
-function rollCall(names){
-  index = 0;
-  function callNames() {
-    if(index <= names.length -1){
-      console.log(names[index]);
-    } else if(index == names.length){
-      console.log("Everyone accounted for");
+  this.delay = (cb, wait) => {
+    return (...a) => {
+      let caller = () => console.log(cb(...a));
+      setTimeout(caller, wait);
     }
-    index ++;
-  }
-  return callNames
+  };
+
+  this.rollCall = (names) => {
+    let index = 0;
+    return () => {
+      if(index <= names.length -1){
+        console.log(names[index]);
+      } else if(index == names.length){
+        console.log("Everyone accounted for");
+      }
+      index ++;
+    }
+  };
 }
 
-module.exports = outer, createFunction, createFunctionPrinter, addByX, once, after, delay, rollCall
+module.exports = closures
