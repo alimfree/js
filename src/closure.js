@@ -51,4 +51,4 @@ function closures() {
   };
 }
 
-module.exports = closures
+module.exports = closures;

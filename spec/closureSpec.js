@@ -1,5 +1,5 @@
 describe("Closure", () => {
-  const closures = require('../closure');
+  const closures = require('../src/closure');
 
   beforeEach( () =>{
     closure = new closures();
