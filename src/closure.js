@@ -28,7 +28,12 @@ function closures() {
 
   this.after = (r, cb) => {
     counter = 1;
-    return () => { if (counter == r) cb() } ;
+    return () => {
+      if (counter == r)
+        return cb()
+      else
+        counter++
+    }
   };
 
   this.delay = (cb, wait) => {

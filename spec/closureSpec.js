@@ -66,16 +66,17 @@ describe("Closure", () => {
 
   describe('after', () => {
     beforeEach(() => {
-      hello = sinon.fake();
+      hello = sinon.fake.returns(42);
       runOnce = closure.after(3, hello);
     });
 
-    it("executes callback after called first x times", () => {
+    it("executes callback only once after its called 3 times", () => {
       first = runOnce();
       second = runOnce();
       third = runOnce();
       expect(first).toEqual(undefined);
       expect(second).toEqual(undefined);
+      expect(third).toEqual(42);
       expect(hello.calledOnce);
     });
   });
