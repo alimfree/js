@@ -1,6 +1,8 @@
+
 describe("Closure", () => {
-  const closures = require('../src/closure');
-  const jasmin = require('jasmine');
+  const closures = require('./../src/closure');
+  const sinon = require('sinon');
+
   beforeEach( () =>{
     closure = new closures();
   });
@@ -52,16 +54,29 @@ describe("Closure", () => {
 
   describe("once", () => {
     beforeEach(() => {
-      stub = { addBy2: closure.addByX(2) }
-      work = closure.once(stub.addBy2);
-      spyOn(stub, 'addBy2')
-    })
+      stub = sinon.fake()
+      work = closure.once(stub);
+    });
 
     it("runs callback function once", () => {
-      //console.log(stub.addBy2(4))
-      work(2);
-      expect(stub.addBy2).toHaveBeenCalledWith(2)
-      expect(stub.addBy2.calls.count()).toBe(1);
+      work();
+      expect(stub.calledOnce);
     })
+  });
+
+  describe('after', () => {
+    beforeEach(() => {
+      hello = sinon.fake();
+      runOnce = closure.after(3, hello);
+    });
+
+    it("executes callback after called first x times", () => {
+      first = runOnce();
+      second = runOnce();
+      third = runOnce();
+      expect(first).toEqual(undefined);
+      expect(second).toEqual(undefined);
+      expect(hello.calledOnce);
+    });
   });
 });
