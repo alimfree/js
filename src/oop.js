@@ -3,156 +3,167 @@ console.log('Hello, world!');
 
 
 /****************************************************************
-                  WORKING WITH OBJECT LITERALS
-****************************************************************/
+ WORKING WITH OBJECT LITERALS
+ ****************************************************************/
 
 /*** CHALLENGE 1 of 1 ***/
 
 function makePerson(name, age) {
-	// add code here
-
-
+  let person = {
+    name: name,
+    age: age
+  }
+  return person;
 }
 
 const vicky = makePerson('Vicky', 24);
 
 
 // /********* Uncomment these lines to test your work! *********/
-// console.log(vicky.name); // -> Logs 'Vicky'
-// console.log(vicky.age); // -> Logs 24
+console.log(vicky.name); // -> Logs 'Vicky'
+console.log(vicky.age); // -> Logs 24
 
 
 
 
 
 /****************************************************************
-                       USING OBJECT.CREATE
-****************************************************************/
+ USING OBJECT.CREATE
+ ****************************************************************/
 
 /*** CHALLENGE 1 of 3 ***/
 
 const personStore = {
-	// add code here
-
+  // add code here
+  greet: () => { console.log('hello'); }
 
 };
 
 // /********* Uncomment this line to test your work! *********/
-// personStore.greet(); // -> Logs 'hello'
+personStore.greet(); // -> Logs 'hello'
 
 
 
 /*** CHALLENGE 2 of 3 ***/
 
 function personFromPersonStore(name, age) {
-	// add code here
-
-
+  // add code here
+  let personCreator = Object.create(personStore)
+  personCreator.name = name
+  personCreator.age = age;
+  return personCreator
 }
 
 const sandra = personFromPersonStore('Sandra', 26);
 
 
 // /********* Uncomment these lines to test your work! *********/
-// console.log(sandra.name); // -> Logs 'Sandra'
-// console.log(sandra.age); //-> Logs 26
-// sandra.greet(); //-> Logs 'hello'
+console.log(sandra.name); // -> Logs 'Sandra'
+console.log(sandra.age); //-> Logs 26
+sandra.greet(); //-> Logs 'hello'
 
 
 
 /*** CHALLENGE 3 of 3 ***/
 
 // add code here
-
-// sandra.introduce(); // -> Logs 'Hi, my name is Sandra'
+sandra.introduce = () => { console.log('Hi, my name is sandra')}
+sandra.introduce(); // -> Logs 'Hi, my name is Sandra'
 
 
 
 
 
 /****************************************************************
-                    USING THE 'NEW' KEYWORD
-****************************************************************/
+ USING THE 'NEW' KEYWORD
+ ****************************************************************/
 
 /*** CHALLENGE 1 of 3 ***/
 
 function PersonConstructor() {
-	// add code here
-
+  // add code here
+  this.greet = () => {console.log('hello')}
 
 }
 
 
 // /********* Uncomment this line to test your work! *********/
 const simon = new PersonConstructor;
-// simon.greet(); // -> Logs 'hello'
+simon.greet(); // -> Logs 'hello'
 
 
 
 /*** CHALLENGE 2 of 3 ***/
 
 function personFromConstructor(name, age) {
-	// add code here
-
+  // add code here
+  this.name = name;
+  this.age = age;
+  this.greet = () => console.log('hello');
 
 }
 
-const mike = personFromConstructor('Mike', 30);
+const mike = new personFromConstructor('Mike', 30);
 
 
 // /********* Uncomment these lines to test your work! *********/
-// console.log(mike.name); // -> Logs 'Mike'
-// console.log(mike.age); //-> Logs 30
-// mike.greet(); //-> Logs 'hello'
+console.log(mike.name); // -> Logs 'Mike'
+console.log(mike.age); //-> Logs 30
+mike.greet(); //-> Logs 'hello'
 
 
 
 /*** CHALLENGE 3 of 3 ***/
 // add code here
 
-
-// mike.introduce(); // -> Logs 'Hi, my name is Mike'
+mike.introduce = () => {console.log('Hi, my name is Mike')}
+mike.introduce(); // -> Logs 'Hi, my name is Mike'
 
 
 /****************************************************************
-                        USING ES6 CLASSES
-****************************************************************/
+ USING ES6 CLASSES
+ ****************************************************************/
 
 /*** CHALLENGE 1 of 3 ***/
 
 class PersonClass {
-	constructor() {
+  constructor(name) {
     // add code here
+    this.name = name;
+  }
 
 
-	}
-
-	// add code here
+  // add code here
+  greet() { console.log('hello');
+  }
 
 }
 
 
 // /********* Uncomment this line to test your work! *********/
 const george = new PersonClass;
-// george.greet(); // -> Logs 'hello'
+george.greet(); // -> Logs 'hello'
 
 
 
 /*** CHALLENGE 2 of 3 ***/
 
 // add code here
-
-
+class DeveloperClass extends PersonClass {
+  introduce() {
+    console.log(`Hello World, my name is ${this.name}`)
+  }
+}
 // /********* Uncomment these lines to test your work! *********/
-// const thai = new DeveloperClass('Thai', 32);
-// console.log(thai.name); // -> Logs 'Thai'
-// thai.introduce(); //-> Logs 'Hello World, my name is Thai'
+const thai = new DeveloperClass('Thai', 32);
+console.log(thai.name); // -> Logs 'Thai'
+thai.introduce(); //-> Logs 'Hello World, my name is Thai'
 
 
 
 /****************************************************************
-                      EXTENSION: SUBCLASSING
-****************************************************************/
+ EXTENSION: SUBCLASSING
+ ****************************************************************/
 
 const userFunctionStore = {
   sayType: function() {
@@ -169,9 +180,15 @@ function userFactory(name, score) {
 }
 
 // const adminFunctionStore /* Put code here */ ;
+function adminFunctionStore() {
+  return Object.create(userFactory);
+}
 
 function adminFactory(name, score) {
   // Put code here
+  let admin = Object.create(adminFunctionStore);
+  admin.type = 'Admin';
+  return admin
 }
 
 /* Put code here for a method called sharePublicMessage*/
@@ -179,13 +196,13 @@ function adminFactory(name, score) {
 const adminFromFactory = adminFactory("Eva", 5);
 
 // /********* Uncomment these lines to test your work! *********/
-// adminFromFactory.sayType() // -> Logs "I am a Admin"
+adminFromFactory.sayType() // -> Logs "I am a Admin"
 // adminFromFactory.sharePublicMessage() // -> Logs "Welcome users!"
 
 
 /****************************************************************
-EXTENSION: MIXINS
-****************************************************************/
+ EXTENSION: MIXINS
+ ****************************************************************/
 
 class Dog {
   constructor() {
