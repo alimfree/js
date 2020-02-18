@@ -181,12 +181,12 @@ function userFactory(name, score) {
 
 // const adminFunctionStore /* Put code here */ ;
 function adminFunctionStore() {
-  return Object.create(userFactory);
+  return new userFactory;
 }
 
 function adminFactory(name, score) {
   // Put code here
-  let admin = Object.create(adminFunctionStore);
+  let admin = new adminFunctionStore;
   admin.type = 'Admin';
   return admin
 }
@@ -197,7 +197,8 @@ const adminFromFactory = adminFactory("Eva", 5);
 
 // /********* Uncomment these lines to test your work! *********/
 adminFromFactory.sayType() // -> Logs "I am a Admin"
-// adminFromFactory.sharePublicMessage() // -> Logs "Welcome users!"
+adminFromFactory.sharePublicMessage = () => { console.log('Welcome users!')}
+adminFromFactory.sharePublicMessage() // -> Logs "Welcome users!"
 
 
 /****************************************************************
@@ -219,10 +220,11 @@ const robotMixin = {
 }
 
 let robotFido = new Dog();
+Object.assign(robotFido, robotMixin)
 
 // robotFido = /* Put code here to give Fido robot skills */;
 
 // /********* Uncomment to test your work! *********/
-// robotFido.speak() // -> Logs "I am made of metal"
+robotFido.speak() // -> Logs "I am made of metal"
 
 
