@@ -5,17 +5,21 @@ if (!Object.is || true) {
     result = false;
 
     //Numbers
-    if( true === Number.isNaN(value) && true == Number.isNaN(type)){
+    if (Math.sign(Math.pow(value, -1)) == -1 && Math.sign(Math.pow(type, -1)) == -1){
       result = true;
-    } else if(type === value  &&  "number" === typeof(value) && "number" === typeof(type)){
+    } else if (Math.sign(Math.pow(value, -1)) == 1 && Math.sign(Math.pow(type, -1)) == 1 && type == 0 && value == 0){
+      result = true;
+    } else if( true === Number.isNaN(value) && true == Number.isNaN(type)){
+      result = true;
+    } else if(type === value  &&  "number" === typeof(value) && "number" === typeof(type) && value > 0 && type > 0){
       result = true;
     }  else if(type === value  && "string" === typeof(value) && "string" === typeof(type)){
+      result = true;
+    } else if(type === value  && "boolean" === typeof(value) && "boolean" === typeof(type)){
       result = true;
     } else if ("undefined" === typeof(value) && "undefined" === typeof(type)){
       result = true;
     } else if ("object" === typeof(value) && "object" == typeof(type)){
-      result = true;
-    } else if ( -0 == Math.sign(type) && -0 == Math.sign(value)){
       result = true;
     }
     return result;
