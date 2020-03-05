@@ -8,15 +8,14 @@ function isValidName(string) {
 }
 
 function hoursAttended(attended, length){
-  let numAttended = Number(attended)
+  let numAttended = Number(attended);
   let numLength = Number(length);
-  types = ["string", 'number']
+  let types = ["string", 'number'];
   let allowed = (types.includes(typeof(attended)) && types.includes(typeof(length)));
-  let bothNumerical = (typeof(numAttended) === "number" && typeof(numLength) == "number");
-  let bothWhole = String(attended+length).match(/\./) == null && numAttended > 0 && numLength > 0;
-  return ( allowed && bothNumerical && bothWhole && numAttended <= numLength)
+  let bothNumerical = (typeof(numAttended) == "number" && typeof(numLength) == "number");
+  let bothWhole = String(attended+length).match(/\./) == null && numAttended >= 0 && numLength >= 0;
+  return (allowed && bothNumerical && bothWhole && numAttended <= numLength);
 }
-
 
 // tests:
 console.log(isValidName("Frank") === true);
