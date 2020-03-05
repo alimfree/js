@@ -8,17 +8,15 @@ String(-0)
 
 
 Math.sign(-0)
--0 == -0
-0 == -0
+-0 === -0
+0 === -0
 
 
 
 
 
 1/0 // undefined
-1/-0 // undefined
+1/x // undefined
 
-x = -0
-1/x == -Infinity && x
-
-Object.is(x, -0)
+1/x == -Infinity
+Object.is(x, 0) == false // true
