@@ -1,16 +1,27 @@
 // TODO: write `findAll(..)`
-function findAll(target, array){
-  const negZero = (v) => 1/v == -Infinity;
-  allowed = [undefined, null];
-  result = []
+function findAll(t, array){
+  let result = []
   for(i=0; i<=array.length-1; i++){
-    value = array[i];
-    if(allowed.includes(value) && allowed.includes(target)){
-      result.push(value);
-    } else if(value == target && !negZero(target) && !negZero(value)){
-      result.push(value);
-    } else if(Object.is(target, value)){
-      result.push(value);
+    v = array[i];
+    const negZero = (v) => 1/v == -Infinity && !Object.is(v, "") && !Object.is(v, false);
+    const oneIsNeg = negZero(t) || negZero(v);
+    const zero = (v) => 1/v == Infinity && !Object.is(v, "") && !Object.is(v, false);
+    const list = [undefined, null];
+    const isBoolean = (v) => Object.is(v, true) || Object.is(v, false)
+    const oneIsBoolean = isBoolean(v) || isBoolean(t);
+    const nullable =list.includes(v) && list.includes(t);
+    const bothNegZero = negZero(t) && negZero(v);
+    const bothZero = zero(t) && zero(v);
+    if(nullable){
+      result.push(v);
+    } else if(v == t && bothNegZero){
+      result.push(v);
+    } else if(v == t && bothZero){
+      result.push(v);
+    } else if(Object.is(t, v)){
+      result.push(v);
+    } else if(String(v) == String(t) && !oneIsBoolean && !oneIsNeg && ! isNaN(v)){
+      result.push(v);
     }
   }
   return result
