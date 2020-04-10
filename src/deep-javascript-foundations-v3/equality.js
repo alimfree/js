@@ -6,13 +6,12 @@ function findAll(t, array){
     const negZero = (v) => 1/v == -Infinity && !Object.is(v, "") && !Object.is(v, false);
     const oneIsNeg = negZero(t) || negZero(v);
     const zero = (v) => 1/v == Infinity && !Object.is(v, "") && !Object.is(v, false);
-    const list = [undefined, null];
     const isBoolean = (v) => Object.is(v, true) || Object.is(v, false)
     const oneIsBoolean = isBoolean(v) || isBoolean(t);
-    const nullable =list.includes(v) && list.includes(t);
+    const nullUndefined = [undefined, null].includes(v) && [undefined, null].includes(t);
     const bothNegZero = negZero(t) && negZero(v);
     const bothZero = zero(t) && zero(v);
-    if(nullable){
+    if(nullUndefined){
       result.push(v);
     } else if(v == t && bothNegZero){
       result.push(v);
@@ -20,7 +19,7 @@ function findAll(t, array){
       result.push(v);
     } else if(Object.is(t, v)){
       result.push(v);
-    } else if(String(v) == String(t) && !oneIsBoolean && !oneIsNeg && ! isNaN(v)){
+    } else if(String(v) == String(t) && !oneIsBoolean && !oneIsNeg && !isNaN(v)){
       result.push(v);
     }
   }
