@@ -1,6 +1,20 @@
 // TODO: write `findAll(..)`
-
-
+function findAll(target, array){
+  const negZero = (v) => 1/v == -Infinity;
+  allowed = [undefined, null];
+  result = []
+  for(i=0; i<=array.length-1; i++){
+    value = array[i];
+    if(allowed.includes(value) && allowed.includes(target)){
+      result.push(value);
+    } else if(value == target && !negZero(target) && !negZero(value)){
+      result.push(value);
+    } else if(Object.is(target, value)){
+      result.push(value);
+    }
+  }
+  return result
+}
 
 // tests:
 var myObj = { a: 2 };
