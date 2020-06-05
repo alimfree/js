@@ -1,25 +1,41 @@
 function printRecords(recordIds) {
-  records = sortRecordsByName();
-  if(recordIds){
-    for(i=0; i < recordIds.length; i++){
-      student = getRecord(recordIds[i], records);
-      console.log(student);
-    }
-  }
+  students = enrolledStudents(recordIds);
+  sortRecordsByName(students).forEach(function print(student){
+    console.log(`${student.name} (${student.id}):  ${paid(student)}`)
+  });
 }
 
 function paidStudentsToEnroll() {
-  // TODO
+  students = paidButNotEnrolled().concat(currentEnrollment);
+  console.log(students)
+  printRecords(students)
 }
 
 function remindUnpaid(recordIds) {
   // TODO
 }
 
-function sortRecordsByName(){
-  return studentRecords.sort(function(a, b) {
-    var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-    var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+function paidButNotEnrolled(){
+  return studentRecords.map(function findStudents(student){
+    if(!currentEnrollment.includes(student.id) && student.paid) return student.id
+  }).filter(item => !!item)
+}
+
+function paid(student){
+  return student.paid ? "Paid" : "Not Paid"
+}
+
+function enrolledStudents(students){
+  return students.map(function findStudents(id){
+    return getRecord(id, studentRecords);
+  }).filter(item => !!item)
+}
+
+function sortRecordsByName(records){
+  return records.sort(function alphabeticalOrder(a, b) {
+    //ignore case
+    var nameA = a.name.toUpperCase();
+    var nameB = b.name.toUpperCase();
     if (nameA < nameB) {
       return -1;
     }
@@ -58,7 +74,7 @@ var studentRecords = [
 printRecords(currentEnrollment);
 console.log("----");
 currentEnrollment = paidStudentsToEnroll();
-//printRecords(currentEnrollment);
+printRecords(currentEnrollment);
 console.log("----");
 remindUnpaid(currentEnrollment);
 
