@@ -42,20 +42,19 @@ function findStudentRecords(students){
 
 function sortRecordsByName(records){
   return records.sort(function alphabeticalOrder(a, b) {
-    //ignore case
     var nameA = a.name.toUpperCase();
     var nameB = b.name.toUpperCase();
     if (nameA < nameB) {
       return -1;
-    }
-    if (nameA > nameB) {
+    } else if (nameA > nameB) {
       return 1;
+    } else {
+      return 0;
     }
-
-    // names must be equal
-    return 0;
   });
 }
+
+
 
 function matchStudentById(id, students) {
   function match(student) {
